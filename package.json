@@ -1,0 +1,42 @@
+{
+  "name": "autorepai",
+  "version": "0.1.0",
+  "description": "Auto Repair Management and Intelligence System",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "build": "npm run lint && npm test"
+  },
+  "keywords": [
+    "auto-repair",
+    "management",
+    "automotive",
+    "service",
+    "crm"
+  ],
+  "author": "Apex Business Systems",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apexbusiness-systems/autorepai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apexbusiness-systems/autorepai/issues"
+  },
+  "homepage": "https://github.com/apexbusiness-systems/autorepai#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "nodemon": "^3.0.0"
+  }
+}
