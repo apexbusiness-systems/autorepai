@@ -1,62 +1,100 @@
-# AutoRepAi
+# AutoRepai
 
-Compliance-first dealership AI platform built on React + TypeScript + Supabase.
+Auto Repair Management and Intelligence System
 
 ## Overview
 
-AutoRepAi is an enterprise-grade, multi-tenant platform for dealership lead management, inventory intelligence, quoting, and compliance workflows. The frontend is powered by React 18 + Vite, with Supabase providing authentication, PostgreSQL storage, and realtime updates.
+AutoRepai is a comprehensive auto repair management solution designed to streamline repair shop operations, diagnostics, and customer management.
 
-## Tech Stack
+## Features
 
-- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
-- **UI**: Radix primitives + shadcn-style components
-- **Routing**: React Router v6
-- **State**: TanStack Query
-- **Forms**: React Hook Form + Zod validation
-- **Backend**: Supabase (PostgreSQL + Auth + Realtime)
+- Service order management
+- Parts inventory tracking
+- Customer relationship management
+- Diagnostic tools integration
+- Scheduling and appointments
+- Billing and invoicing
 
-## Local Development
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ or Python 3.9+
+- Database (PostgreSQL/MySQL)
+- Modern web browser
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/apexbusiness-systems/autorepai.git
+cd autorepai
+
+# Install dependencies
 npm install
-npm run dev
-# open http://localhost:8080
-```
+# or
+pip install -r requirements.txt
 
-### Environment Variables
+# Configure environment
+cp .env.example .env
 
-Create a `.env` file with:
-
-```bash
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-## Scripts
-
-```bash
-npm run build
-npm run lint
-npm run typecheck
-npm run test
+# Run the application
+npm start
+# or
+python main.py
 ```
 
 ## Project Structure
 
 ```
-src/
-├── components/
-├── pages/
-├── lib/
-├── integrations/
-└── types/
+autorepai/
+├── src/              # Source code
+├── tests/            # Test files
+├── docs/             # Documentation
+├── config/           # Configuration files
+└── scripts/          # Build and deployment scripts
 ```
 
-## Notes
+## Development
 
-- Edge functions live in Supabase and are invoked via `/functions/v1/*` endpoints.
-- RLS is expected to be enabled on all tables in production.
+### Running Tests
+
+```bash
+npm test
+# or
+pytest
+```
+
+### Code Style
+
+This project follows industry-standard coding conventions. Please ensure your code passes linting before submitting PRs.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support and questions, please open an issue in the GitHub repository.
+
+## Roadmap
+
+- [ ] Core service management functionality
+- [ ] Mobile application
+- [ ] AI-powered diagnostics
+- [ ] Integration with parts suppliers
+- [ ] Advanced reporting and analytics
+
+---
+
+**Status:** Initial Development
+
+Built with ❤️ by Apex Business Systems
