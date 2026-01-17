@@ -62,3 +62,4 @@ yarn.lock
 pnpm-lock.yaml
 poetry.lock
 Pipfile.lock
+test-results/
