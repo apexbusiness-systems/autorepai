@@ -1,4 +1,4 @@
-# AutoRepAi
+AutoRepAi
 
 Compliance-first dealership AI platform built on React + TypeScript + Supabase.
 
