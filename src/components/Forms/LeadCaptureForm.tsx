@@ -22,16 +22,17 @@ const LeadCaptureForm = () => {
     resolver: zodResolver(leadSchema)
   });
 
-  const onSubmit = async (data: LeadFormValues) => {
+  const onSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 400));
-    console.log('Lead submitted', data);
+    // No logging of PII
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="text-sm font-medium">Full name</label>
+        <label htmlFor="lead-fullName" className="text-sm font-medium">Full name</label>
         <input
+          id="lead-fullName"
           {...register('fullName')}
           className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
           placeholder="Alex Morgan"
@@ -39,8 +40,10 @@ const LeadCaptureForm = () => {
         {errors.fullName && <p className="text-xs text-red-300">{errors.fullName.message}</p>}
       </div>
       <div>
-        <label className="text-sm font-medium">Email</label>
+        <label htmlFor="lead-email" className="text-sm font-medium">Email</label>
         <input
+          id="lead-email"
+          type="email"
           {...register('email')}
           className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
           placeholder="alex@dealership.com"
@@ -48,8 +51,9 @@ const LeadCaptureForm = () => {
         {errors.email && <p className="text-xs text-red-300">{errors.email.message}</p>}
       </div>
       <div className="rounded-md border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm">
-        <label className="flex items-start gap-2">
+        <label htmlFor="lead-consent" className="flex items-start gap-2">
           <input
+            id="lead-consent"
             type="checkbox"
             {...register('consentMarketing')}
             className="mt-1"
