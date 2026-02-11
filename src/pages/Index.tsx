@@ -32,13 +32,10 @@ const Index = () => {
           </div>
         </section>
         <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
-          <h3 className="text-lg font-semibold">Production status</h3>
-          <ul className="mt-4 space-y-2 text-sm text-slate-300">
-            <li>✅ Supabase RLS coverage across 20 core tables</li>
-            <li>✅ AES-256-GCM field encryption for credit data</li>
-            <li>✅ Lovable AI Gateway (Gemini 2.5 Flash)</li>
-            <li>⚠️ CI/CD tests required before release</li>
-          </ul>
+          <h3 className="text-lg font-semibold">System status</h3>
+          <p className="mt-4 text-sm text-slate-300">
+            Status: Development
+          </p>
         </section>
       </main>
     </div>
