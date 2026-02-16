@@ -6,9 +6,9 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#eef7ff',
-          500: '#1f6feb',
-          700: '#0f4dbd'
+          50: '#fef2f2',
+          500: '#ef4444',
+          700: '#b91c1c'
         }
       }
     }
