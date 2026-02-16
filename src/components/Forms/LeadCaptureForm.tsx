@@ -29,8 +29,9 @@ const LeadCaptureForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="text-sm font-medium">Full name</label>
+        <label htmlFor="fullName" className="text-sm font-medium">Full name</label>
         <input
+          id="fullName"
           {...register('fullName')}
           className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
           placeholder="Alex Morgan"
@@ -38,8 +39,9 @@ const LeadCaptureForm = () => {
         {errors.fullName && <p className="text-xs text-red-300">{errors.fullName.message}</p>}
       </div>
       <div>
-        <label className="text-sm font-medium">Email</label>
+        <label htmlFor="email" className="text-sm font-medium">Email</label>
         <input
+          id="email"
           {...register('email')}
           className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
           placeholder="alex@dealership.com"
