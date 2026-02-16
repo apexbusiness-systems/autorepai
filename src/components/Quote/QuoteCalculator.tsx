@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Button } from '../ui/button';
+import { Input } from '../ui/Input';
 import { calculateQuoteTotals, type QuoteInput } from '../../lib/taxCalculator';
 
 const defaultInput: QuoteInput = {
@@ -33,9 +34,9 @@ const QuoteCalculator = () => {
         ] as const).map((field) => (
           <label key={field.key} className="text-sm">
             {field.label}
-            <input
+            <Input
               type="number"
-              className="mt-2 w-full rounded-md border border-slate-800 bg-slate-950 px-3 py-2"
+              className="bg-slate-950"
               value={input[field.key]}
               onChange={(event) =>
                 setInput((prev) => ({
