@@ -24,7 +24,6 @@ const LeadCaptureForm = () => {
 
   const onSubmit = async (data: LeadFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 400));
-    console.log('Lead submitted', data);
   };
 
   return (
