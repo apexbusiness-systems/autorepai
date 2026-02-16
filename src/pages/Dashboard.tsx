@@ -1,5 +1,12 @@
 import QuoteCalculator from '../components/Quote/QuoteCalculator';
 
+const PIPELINE_METRICS = [
+  { label: 'Inbound chat', value: 28 },
+  { label: 'Website forms', value: 41 },
+  { label: 'Marketplace feeds', value: 19 },
+  { label: 'Referrals', value: 12 }
+];
+
 const Dashboard = () => {
   return (
     <div className="space-y-8">
@@ -14,12 +21,7 @@ const Dashboard = () => {
             120 active leads · 34 high-intent · 8 awaiting compliance review
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {[
-              { label: 'Inbound chat', value: 28 },
-              { label: 'Website forms', value: 41 },
-              { label: 'Marketplace feeds', value: 19 },
-              { label: 'Referrals', value: 12 }
-            ].map((item) => (
+            {PIPELINE_METRICS.map((item) => (
               <div key={item.label} className="rounded-xl border border-slate-800 bg-slate-950 p-4">
                 <p className="text-sm text-slate-400">{item.label}</p>
                 <p className="text-2xl font-semibold">{item.value}</p>
