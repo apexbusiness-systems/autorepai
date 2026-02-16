@@ -8,9 +8,17 @@ const Auth = () => {
   const redirectTo = (location.state as { from?: Location })?.from?.pathname ?? '/app';
 
   const handleDemoLogin = async () => {
+    const email = import.meta.env.VITE_DEMO_EMAIL;
+    const password = import.meta.env.VITE_DEMO_PASSWORD;
+
+    if (!email || !password) {
+      console.error('Demo credentials are not configured');
+      return;
+    }
+
     await supabase.auth.signInWithPassword({
-      email: 'demo@autorepai.ca',
-      password: 'demo-password'
+      email,
+      password
     });
     navigate(redirectTo, { replace: true });
   };
