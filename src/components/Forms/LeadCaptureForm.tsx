@@ -22,7 +22,7 @@ const LeadCaptureForm = () => {
     resolver: zodResolver(leadSchema)
   });
 
-  const onSubmit = async (data: LeadFormValues) => {
+  const onSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 400));
   };
 
