@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState, type ChangeEvent } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/Input';
 import { calculateQuoteTotals, type QuoteInput } from '../../lib/taxCalculator';
@@ -11,10 +11,63 @@ const defaultInput: QuoteInput = {
   fees: 499
 };
 
+type NumericFieldKey = Exclude<keyof QuoteInput, 'province'>;
+
+const INPUT_FIELDS: { label: string; key: NumericFieldKey }[] = [
+  { label: 'Vehicle price', key: 'vehiclePrice' },
+  { label: 'Trade-in value', key: 'tradeInValue' },
+  { label: 'Down payment', key: 'downPayment' },
+  { label: 'Fees', key: 'fees' }
+];
+
+const PROVINCES = ['ON', 'BC', 'AB', 'SK', 'MB', 'QC'];
+
+// eslint-disable-next-line no-unused-vars
+type NumericInputChangeHandler = (key: NumericFieldKey, value: number) => void;
+
+interface NumericInputProps {
+  label: string;
+  fieldKey: NumericFieldKey;
+  value: number;
+  onChange: NumericInputChangeHandler;
+}
+
+const NumericInput = memo(({ label, fieldKey, value, onChange }: NumericInputProps) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(fieldKey, Number(e.target.value));
+  };
+
+  return (
+    <label className="text-sm">
+      {label}
+      <input
+        type="number"
+        className="mt-2 w-full rounded-md border border-slate-800 bg-slate-950 px-3 py-2"
+        value={value}
+        onChange={handleChange}
+      />
+    </label>
+  );
+});
+
+NumericInput.displayName = 'NumericInput';
+
 const QuoteCalculator = () => {
   const [input, setInput] = useState<QuoteInput>(defaultInput);
 
   const totals = useMemo(() => calculateQuoteTotals(input), [input]);
+
+  const handleInputChange = useCallback((key: NumericFieldKey, value: number) => {
+    setInput((prev) => ({
+      ...prev,
+      [key]: value
+    }));
+  }, []);
+
+  const handleProvinceChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setInput((prev) => ({ ...prev, province: value }));
+  }, []);
 
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
@@ -52,9 +105,9 @@ const QuoteCalculator = () => {
           <select
             className="mt-2 w-full rounded-md border border-slate-800 bg-slate-950 px-3 py-2"
             value={input.province}
-            onChange={(event) => setInput((prev) => ({ ...prev, province: event.target.value }))}
+            onChange={handleProvinceChange}
           >
-            {['ON', 'BC', 'AB', 'SK', 'MB', 'QC'].map((province) => (
+            {PROVINCES.map((province) => (
               <option key={province} value={province}>
                 {province}
               </option>
