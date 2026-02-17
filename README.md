@@ -41,6 +41,33 @@ npm run typecheck
 npm run test
 ```
 
+## Testing
+
+This project uses Vitest + React Testing Library for component testing.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests in watch mode
+npm run test -- --watch
+
+# Run tests with coverage
+npm run test -- --coverage
+
+# Run specific test file
+npm run test -- Auth.test.tsx
+```
+
+**Test Structure**
+- Unit tests: `src/**/*.test.tsx` - Fast, isolated component tests
+- Mocks: `tests/mocks/` - Reusable mock factories
+- Setup: `tests/setup.ts` - Global test configuration
+
+For more details, see [Testing Strategy](docs/testing-strategy.md).
+
 ## Project Structure
 
 ```
