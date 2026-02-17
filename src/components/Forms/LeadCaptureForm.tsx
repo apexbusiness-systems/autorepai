@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
+import { Input } from '../ui/Input';
 
 const leadSchema = z.object({
   fullName: z.string().min(2, 'Full name is required'),
@@ -30,18 +31,18 @@ const LeadCaptureForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <label className="text-sm font-medium">Full name</label>
-        <input
+        <Input
           {...register('fullName')}
-          className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
+          className="bg-slate-900"
           placeholder="Alex Morgan"
         />
         {errors.fullName && <p className="text-xs text-red-300">{errors.fullName.message}</p>}
       </div>
       <div>
         <label className="text-sm font-medium">Email</label>
-        <input
+        <Input
           {...register('email')}
-          className="mt-2 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2"
+          className="bg-slate-900"
           placeholder="alex@dealership.com"
         />
         {errors.email && <p className="text-xs text-red-300">{errors.email.message}</p>}
