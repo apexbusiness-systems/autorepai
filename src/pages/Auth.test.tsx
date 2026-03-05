@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Auth from './Auth';
 import { createMockAuthError, createMockSession } from '../../tests/mocks/supabase';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 // Mock Supabase client
 vi.mock('@/integrations/supabase/client', async () => {
@@ -292,7 +293,7 @@ describe('Auth Component', () => {
   describe('Security & Error Handling', () => {
     it('logs security event on auth failure', async () => {
       const user = userEvent.setup();
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const loggerSpy = vi.spyOn(logger, 'error').mockImplementation(() => {});
 
       (supabase.auth.signInWithPassword as Mock).mockRejectedValueOnce(new Error('Network error'));
 
@@ -306,9 +307,9 @@ describe('Auth Component', () => {
         expect(screen.getByText(/network error/i)).toBeInTheDocument();
       });
 
-      expect(consoleSpy).toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
+      expect(loggerSpy).toHaveBeenCalledWith('auth_failed', expect.objectContaining({ message: 'Network error' }));
 
-      consoleSpy.mockRestore();
+      loggerSpy.mockRestore();
     });
 
     it('handles rate limit error from Supabase', async () => {

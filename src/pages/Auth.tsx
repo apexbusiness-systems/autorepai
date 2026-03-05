@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '../components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 // Zod schemas for validation
 const signInSchema = z.object({
@@ -76,7 +77,7 @@ const Auth = () => {
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
       // Log security event (simulated)
-      console.error('auth_failed', { email: data.email });
+      logger.error('auth_failed', { message: err.message });
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +116,7 @@ const Auth = () => {
     const password = import.meta.env.VITE_DEMO_PASSWORD;
 
     if (!email || !password) {
-      console.error('Demo credentials are not configured');
+      setError('Demo credentials are not configured');
       return;
     }
 
