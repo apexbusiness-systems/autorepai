@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import Auth from './Auth';
-import { createMockAuthError, createMockSession } from '../../tests/mocks/supabase';
+import { createMockAuthError, createMockSession, mockSuccessfulSignIn, mockSuccessfulSignUp } from '../../tests/mocks/supabase';
 import { supabase } from '@/integrations/supabase/client';
 
 // Mock Supabase client
@@ -228,7 +228,7 @@ describe('Auth Component', () => {
     it('shows loading state during sign in', async () => {
       const user = userEvent.setup();
       (supabase.auth.signInWithPassword as Mock).mockImplementation(
-        () => new Promise(resolve => setTimeout(() => resolve({ data: {}, error: null } as any), 100))
+        () => new Promise(resolve => setTimeout(() => resolve(mockSuccessfulSignIn()), 100))
       );
 
       renderAuth();
@@ -247,7 +247,7 @@ describe('Auth Component', () => {
     it('shows loading state during sign up', async () => {
       const user = userEvent.setup();
       (supabase.auth.signUp as Mock).mockImplementation(
-        () => new Promise(resolve => setTimeout(() => resolve({ data: {}, error: null } as any), 100))
+        () => new Promise(resolve => setTimeout(() => resolve(mockSuccessfulSignUp()), 100))
       );
 
       renderAuth();
