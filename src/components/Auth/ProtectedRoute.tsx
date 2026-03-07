@@ -12,19 +12,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const getSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (!isMounted) return;
-      setHasSession(Boolean(data.session));
+    // eslint-disable-next-line no-unused-vars
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setHasSession(Boolean(session));
       setIsLoading(false);
-    };
-
-    getSession();
+    });
 
     return () => {
-      isMounted = false;
+      subscription.unsubscribe();
     };
   }, []);
 
