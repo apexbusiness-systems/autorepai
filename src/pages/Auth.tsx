@@ -76,7 +76,7 @@ const Auth = () => {
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
       // Log security event (simulated)
-      console.error('auth_failed', { email: data.email });
+      console.error('auth_failed');
     } finally {
       setIsLoading(false);
     }
