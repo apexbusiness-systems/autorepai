@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/logger';
 
 const supabaseUrl =
   (import.meta.env.VITE_SUPABASE_URL as string | undefined) ??
@@ -7,7 +8,7 @@ const supabaseAnonKey =
   (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) ?? 'public-anon-key';
 
 if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-  console.warn('Supabase environment variables are missing. Using placeholder client.');
+  logger.warn('Supabase environment variables are missing. Using placeholder client.');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
