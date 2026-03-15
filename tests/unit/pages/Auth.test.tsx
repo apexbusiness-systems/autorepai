@@ -2,13 +2,13 @@ import { render, screen as rtlScreen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
-import Auth from './Auth';
-import { createMockAuthError, createMockSession } from '../../tests/mocks/supabase';
+import Auth from '@/pages/Auth';
+import { createMockAuthError, createMockSession } from '../../mocks/supabase';
 import { supabase } from '@/integrations/supabase/client';
 
 // Mock Supabase client
 vi.mock('@/integrations/supabase/client', async () => {
-  const actual = await vi.importActual('../../tests/mocks/supabase');
+  const actual = await vi.importActual('../../mocks/supabase');
   return {
     supabase: (actual as any).createMockSupabaseClient(),
   };
