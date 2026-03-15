@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen as rtlScreen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -44,28 +44,28 @@ describe('Auth Component', () => {
   describe('Rendering', () => {
     it('renders sign in form by default', () => {
       renderAuth();
-      expect(screen.getByText(/sign in to your workspace/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument();
-      expect(screen.queryByLabelText(/full name/i)).not.toBeInTheDocument();
+      expect(rtlScreen.getByText(/sign in to your workspace/i)).toBeInTheDocument();
+      expect(rtlScreen.getByLabelText(/email/i)).toBeInTheDocument();
+      expect(rtlScreen.getByLabelText(/password/i)).toBeInTheDocument();
+      expect(rtlScreen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument();
+      expect(rtlScreen.queryByLabelText(/full name/i)).not.toBeInTheDocument();
     });
 
     it('switches to sign up form when tab is clicked', async () => {
       const user = userEvent.setup();
       renderAuth();
 
-      const signUpTab = screen.getByRole('tab', { name: 'Sign Up' });
+      const signUpTab = rtlScreen.getByRole('tab', { name: 'Sign Up' });
       await user.click(signUpTab);
 
-      expect(screen.getByText(/create an account/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Create Account' })).toBeInTheDocument();
+      expect(rtlScreen.getByText(/create an account/i)).toBeInTheDocument();
+      expect(rtlScreen.getByLabelText(/full name/i)).toBeInTheDocument();
+      expect(rtlScreen.getByRole('button', { name: 'Create Account' })).toBeInTheDocument();
     });
 
     it('renders demo login button', () => {
       renderAuth();
-      expect(screen.getByRole('button', { name: /demo account/i })).toBeInTheDocument();
+      expect(rtlScreen.getByRole('button', { name: /demo account/i })).toBeInTheDocument();
     });
   });
 
@@ -74,8 +74,8 @@ describe('Auth Component', () => {
       const user = userEvent.setup();
       renderAuth();
 
-      const emailInput = screen.getByLabelText(/email/i);
-      const submitButton = screen.getByRole('button', { name: 'Sign In' });
+      const emailInput = rtlScreen.getByLabelText(/email/i);
+      const submitButton = rtlScreen.getByRole('button', { name: 'Sign In' });
 
       await user.type(emailInput, 'not-an-email');
       await user.click(submitButton);
@@ -86,20 +86,20 @@ describe('Auth Component', () => {
       // But we assert it is NOT called.
 
       expect(supabase.auth.signInWithPassword).not.toHaveBeenCalled();
-      expect(await screen.findByText(/invalid email address/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/invalid email address/i)).toBeInTheDocument();
     });
 
     it('shows error for short password', async () => {
       const user = userEvent.setup();
       renderAuth();
 
-      const passwordInput = screen.getByLabelText(/password/i);
-      const submitButton = screen.getByRole('button', { name: 'Sign In' });
+      const passwordInput = rtlScreen.getByLabelText(/password/i);
+      const submitButton = rtlScreen.getByRole('button', { name: 'Sign In' });
 
       await user.type(passwordInput, '123');
       await user.click(submitButton);
 
-      expect(await screen.findByText(/password must be at least 6 characters/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/password must be at least 6 characters/i)).toBeInTheDocument();
       expect(supabase.auth.signInWithPassword).not.toHaveBeenCalled();
     });
 
@@ -107,21 +107,21 @@ describe('Auth Component', () => {
       const user = userEvent.setup();
       renderAuth();
 
-      const submitButton = screen.getByRole('button', { name: 'Sign In' });
+      const submitButton = rtlScreen.getByRole('button', { name: 'Sign In' });
       await user.click(submitButton);
 
-      expect(await screen.findByText(/invalid email/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/invalid email/i)).toBeInTheDocument();
     });
 
     it('validates sign up fields', async () => {
       const user = userEvent.setup();
       renderAuth();
-      await user.click(screen.getByRole('tab', { name: 'Sign Up' }));
+      await user.click(rtlScreen.getByRole('tab', { name: 'Sign Up' }));
 
-      const submitButton = screen.getByRole('button', { name: 'Create Account' });
+      const submitButton = rtlScreen.getByRole('button', { name: 'Create Account' });
       await user.click(submitButton);
 
-      expect(await screen.findByText(/name must be at least 2 characters/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/name must be at least 2 characters/i)).toBeInTheDocument();
       expect(supabase.auth.signUp).not.toHaveBeenCalled();
     });
   });
@@ -131,9 +131,9 @@ describe('Auth Component', () => {
       const user = userEvent.setup();
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
       expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
         email: 'test@example.com',
@@ -145,9 +145,9 @@ describe('Auth Component', () => {
       const user = userEvent.setup();
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith('/app', { replace: true });
@@ -163,11 +163,11 @@ describe('Auth Component', () => {
 
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
-      expect(await screen.findByText(/invalid login credentials/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/invalid login credentials/i)).toBeInTheDocument();
     });
   });
 
@@ -175,12 +175,12 @@ describe('Auth Component', () => {
     it('calls signUp with correct data', async () => {
       const user = userEvent.setup();
       renderAuth();
-      await user.click(screen.getByRole('tab', { name: 'Sign Up' }));
+      await user.click(rtlScreen.getByRole('tab', { name: 'Sign Up' }));
 
-      await user.type(screen.getByLabelText(/full name/i), 'John Doe');
-      await user.type(screen.getByLabelText(/email/i), 'new@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Create Account' }));
+      await user.type(rtlScreen.getByLabelText(/full name/i), 'John Doe');
+      await user.type(rtlScreen.getByLabelText(/email/i), 'new@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Create Account' }));
 
       expect(supabase.auth.signUp).toHaveBeenCalledWith({
         email: 'new@example.com',
@@ -195,14 +195,14 @@ describe('Auth Component', () => {
     it('shows success message after sign up', async () => {
       const user = userEvent.setup();
       renderAuth();
-      await user.click(screen.getByRole('tab', { name: 'Sign Up' }));
+      await user.click(rtlScreen.getByRole('tab', { name: 'Sign Up' }));
 
-      await user.type(screen.getByLabelText(/full name/i), 'John Doe');
-      await user.type(screen.getByLabelText(/email/i), 'new@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Create Account' }));
+      await user.type(rtlScreen.getByLabelText(/full name/i), 'John Doe');
+      await user.type(rtlScreen.getByLabelText(/email/i), 'new@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Create Account' }));
 
-      expect(await screen.findByText(/account created/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/account created/i)).toBeInTheDocument();
     });
 
     it('shows error message on sign up failure', async () => {
@@ -213,14 +213,14 @@ describe('Auth Component', () => {
       });
 
       renderAuth();
-      await user.click(screen.getByRole('tab', { name: 'Sign Up' }));
+      await user.click(rtlScreen.getByRole('tab', { name: 'Sign Up' }));
 
-      await user.type(screen.getByLabelText(/full name/i), 'John Doe');
-      await user.type(screen.getByLabelText(/email/i), 'existing@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Create Account' }));
+      await user.type(rtlScreen.getByLabelText(/full name/i), 'John Doe');
+      await user.type(rtlScreen.getByLabelText(/email/i), 'existing@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Create Account' }));
 
-      expect(await screen.findByText(/user already registered/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/user already registered/i)).toBeInTheDocument();
     });
   });
 
@@ -233,14 +233,14 @@ describe('Auth Component', () => {
 
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
-      expect(screen.getByRole('button', { name: /signing in/i })).toBeDisabled();
+      expect(rtlScreen.getByRole('button', { name: /signing in/i })).toBeDisabled();
 
       await waitFor(() => {
-        expect(screen.queryByRole('button', { name: /signing in/i })).not.toBeInTheDocument();
+        expect(rtlScreen.queryByRole('button', { name: /signing in/i })).not.toBeInTheDocument();
       });
     });
 
@@ -251,14 +251,14 @@ describe('Auth Component', () => {
       );
 
       renderAuth();
-      await user.click(screen.getByRole('tab', { name: 'Sign Up' }));
+      await user.click(rtlScreen.getByRole('tab', { name: 'Sign Up' }));
 
-      await user.type(screen.getByLabelText(/full name/i), 'John Doe');
-      await user.type(screen.getByLabelText(/email/i), 'new@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Create Account' }));
+      await user.type(rtlScreen.getByLabelText(/full name/i), 'John Doe');
+      await user.type(rtlScreen.getByLabelText(/email/i), 'new@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Create Account' }));
 
-      expect(screen.getByRole('button', { name: /creating account/i })).toBeDisabled();
+      expect(rtlScreen.getByRole('button', { name: /creating account/i })).toBeDisabled();
     });
   });
 
@@ -298,12 +298,12 @@ describe('Auth Component', () => {
 
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
       await waitFor(() => {
-        expect(screen.getByText(/network error/i)).toBeInTheDocument();
+        expect(rtlScreen.getByText(/network error/i)).toBeInTheDocument();
       });
 
       expect(consoleSpy).toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
@@ -320,11 +320,11 @@ describe('Auth Component', () => {
 
       renderAuth();
 
-      await user.type(screen.getByLabelText(/email/i), 'test@example.com');
-      await user.type(screen.getByLabelText(/password/i), 'password123');
-      await user.click(screen.getByRole('button', { name: 'Sign In' }));
+      await user.type(rtlScreen.getByLabelText(/email/i), 'test@example.com');
+      await user.type(rtlScreen.getByLabelText(/password/i), 'password123');
+      await user.click(rtlScreen.getByRole('button', { name: 'Sign In' }));
 
-      expect(await screen.findByText(/too many requests/i)).toBeInTheDocument();
+      expect(await rtlScreen.findByText(/too many requests/i)).toBeInTheDocument();
     });
   });
 });
