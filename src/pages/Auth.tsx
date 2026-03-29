@@ -74,7 +74,12 @@ const Auth = () => {
       }
       navigate(redirectTo, { replace: true });
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to sign in';
+      let errorMessage = 'Failed to sign in';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'object' && err !== null && 'message' in err) {
+        errorMessage = String((err as { message: unknown }).message);
+      }
       setError(errorMessage);
       // Log security event (simulated)
       console.error('auth_failed', { email: data.email });
@@ -105,7 +110,12 @@ const Auth = () => {
 
       setSuccessMessage('Account created! Please check your email to confirm your account.');
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to sign up';
+      let errorMessage = 'Failed to sign up';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'object' && err !== null && 'message' in err) {
+        errorMessage = String((err as { message: unknown }).message);
+      }
       setError(errorMessage);
     } finally {
       setIsLoading(false);
