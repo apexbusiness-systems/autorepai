@@ -73,8 +73,8 @@ const Auth = () => {
         throw error;
       }
       navigate(redirectTo, { replace: true });
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in');
       // Log security event (simulated)
       console.error('auth_failed', { email: data.email });
     } finally {
@@ -103,8 +103,8 @@ const Auth = () => {
       }
 
       setSuccessMessage('Account created! Please check your email to confirm your account.');
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign up');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign up');
     } finally {
       setIsLoading(false);
     }
