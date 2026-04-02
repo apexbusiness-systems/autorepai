@@ -122,7 +122,6 @@ const AIChatWidget = () => {
               />
               <Button
                 type="submit"
-                size="icon"
                 disabled={!inputValue.trim() || isLoading}
                 className="bg-brand-500 hover:bg-brand-600 text-black h-10 w-10 flex-shrink-0"
               >
