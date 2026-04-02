@@ -6,9 +6,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#fef2f2',
-          500: '#ef4444',
-          700: '#b91c1c'
+          50: '#fcfaf2',
+          100: '#f6eedc',
+          200: '#eedfb8',
+          300: '#e4cd8b',
+          400: '#dcb865',
+          500: '#d4af37', // Metallic Gold
+          600: '#b69229',
+          700: '#927124',
+          800: '#795c24',
+          900: '#674f23',
+          950: '#3a2b10',
         }
       },
       animation: {
