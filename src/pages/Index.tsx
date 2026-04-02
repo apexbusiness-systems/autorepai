@@ -22,7 +22,7 @@ const Index = () => {
           </nav>
 
                     <div className="flex items-center gap-4">
-            <Link to="/auth" className="text-sm font-medium text-slate-600 hover:text-brand-400 transition-colors hidden sm:block">
+            <Link to="/auth" className="text-sm font-medium text-brand-500 bg-black rounded-full px-5 py-2 hover:bg-slate-900 transition-colors hidden sm:block">
               Sign In
             </Link>
             <Button asChild className="bg-brand-500 hover:bg-brand-600 text-white font-medium shadow-sm transition-all hover:scale-105 active:scale-95">
