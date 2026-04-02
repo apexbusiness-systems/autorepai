@@ -1,0 +1,8 @@
+{
+  "name": "autorepai",
+  "compatibility_date": "2024-04-02",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  }
+}
