@@ -1,7 +1,7 @@
 import LeadCaptureForm from '../components/Forms/LeadCaptureForm';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../integrations/supabase/client';
-import { Users, Activity, CheckCircle, Clock } from 'lucide-react';
+import { Users, Activity, CheckCircle } from 'lucide-react';
 
 const fetchLeads = async () => {
   if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
