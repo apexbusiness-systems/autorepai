@@ -17,7 +17,9 @@ export default {
           800: '#795c24',
           900: '#674f23',
           950: '#3a2b10',
-        }
+        },
+        primary: 'rgb(var(--primary) / <alpha-value>)',
+        secondary: 'rgb(var(--secondary) / <alpha-value>)',
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.5s ease-out',

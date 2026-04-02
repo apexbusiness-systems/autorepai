@@ -19,7 +19,13 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'json'],
-      exclude: ['node_modules/', 'tests/'],
+      exclude: ['node_modules/', 'tests/', 'src/main.tsx', 'src/vite-env.d.ts'],
+      thresholds: {
+        lines: 95,
+        functions: 95,
+        branches: 95,
+        statements: 95
+      }
     },
   },
   resolve: {
