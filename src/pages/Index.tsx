@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Car, CheckCircle, Sparkles, Rocket, Download, ArrowRight } from 'lucide-react';
+import { Car, CheckCircle, Sparkles, Download, ArrowRight } from 'lucide-react';
 import AIChatWidget from '../components/Chat/AIChatWidget';
 
 const Index = () => {
@@ -93,13 +93,6 @@ const Index = () => {
             <Link to="/auth">
               Start Free Trial
               <ArrowRight className="h-5 w-5" />
-            </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg" className="bg-white border-white text-slate-900 hover:bg-slate-100 font-semibold px-8 h-14 text-base transition-all hover:scale-105 active:scale-95 gap-2">
-            <Link to="/demo">
-              View Live Demo
-              <Rocket className="h-5 w-5 text-brand-500" />
             </Link>
           </Button>
         </div>
