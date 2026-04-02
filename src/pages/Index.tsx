@@ -12,21 +12,21 @@ const Index = () => {
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center border border-slate-800 shadow-sm">
-              <Car className="h-5 w-5 text-brand-500" />
+              <Car className="h-5 w-5 text-brand-400" />
             </div>
             <span className="text-xl font-bold text-slate-900 tracking-tight">AutoRepAi</span>
           </div>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <Link to="/" className="hover:text-brand-500 transition-colors">Home</Link>
-            <Link to="/inventory" className="hover:text-brand-500 transition-colors">Inventory</Link>
-            <Link to="/quotes" className="hover:text-brand-500 transition-colors">Quotes</Link>
-            <Link to="/clients" className="hover:text-brand-500 transition-colors">Clients</Link>
-            <Link to="/app" className="hover:text-brand-500 transition-colors">Dashboard</Link>
-            <Link to="/settings" className="hover:text-brand-500 transition-colors">Settings</Link>
+            <Link to="/" className="hover:text-brand-400 transition-colors">Home</Link>
+            <Link to="/inventory" className="hover:text-brand-400 transition-colors">Inventory</Link>
+            <Link to="/quotes" className="hover:text-brand-400 transition-colors">Quotes</Link>
+            <Link to="/clients" className="hover:text-brand-400 transition-colors">Clients</Link>
+            <Link to="/app" className="hover:text-brand-400 transition-colors">Dashboard</Link>
+            <Link to="/settings" className="hover:text-brand-400 transition-colors">Settings</Link>
           </nav>
 
-          <Button asChild variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-brand-500 gap-2">
+          <Button asChild variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-brand-400 gap-2">
             <Link to="/auth">
               <Download className="h-4 w-4" />
               Install App
@@ -61,7 +61,7 @@ const Index = () => {
               {/* Inner Content */}
               <div className="relative flex flex-col items-center justify-center z-10">
                  {/* Car Icon with Red Stroke */}
-                 <Car className="h-16 w-16 text-brand-500 mb-2" strokeWidth={1.5} />
+                 <Car className="h-16 w-16 text-brand-400 mb-2" strokeWidth={1.5} />
 
                  {/* Text Overlay */}
                  <div className="flex flex-col items-center">
@@ -80,7 +80,7 @@ const Index = () => {
           <span className="text-white block sm:inline">Close More Deals.</span>
           <span className="hidden sm:inline"> </span>
           <br className="sm:hidden" />
-          <span className="text-brand-500 block sm:inline">Work Less.</span>
+          <span className="text-brand-400 block sm:inline">Work Less.</span>
         </h1>
 
         <p className="max-w-2xl text-lg text-slate-400 mb-10 text-center leading-relaxed">
@@ -99,7 +99,7 @@ const Index = () => {
           <Button asChild variant="outline" size="lg" className="bg-white border-white text-slate-900 hover:bg-slate-100 font-semibold px-8 h-14 text-base transition-all hover:scale-105 active:scale-95 gap-2">
             <Link to="/demo">
               View Live Demo
-              <Rocket className="h-5 w-5 text-brand-500" />
+              <Rocket className="h-5 w-5 text-brand-400" />
             </Link>
           </Button>
         </div>
@@ -107,19 +107,19 @@ const Index = () => {
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-slate-400 font-medium">
           <div className="flex items-center gap-2">
             <div className="rounded-full bg-brand-500/10 p-0.5">
-              <CheckCircle className="h-4 w-4 text-brand-500" />
+              <CheckCircle className="h-4 w-4 text-brand-400" />
             </div>
             <span>No credit card required</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="rounded-full bg-brand-500/10 p-0.5">
-              <CheckCircle className="h-4 w-4 text-brand-500" />
+              <CheckCircle className="h-4 w-4 text-brand-400" />
             </div>
             <span>Setup in 5 minutes</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="rounded-full bg-brand-500/10 p-0.5">
-              <CheckCircle className="h-4 w-4 text-brand-500" />
+              <CheckCircle className="h-4 w-4 text-brand-400" />
             </div>
             <span>Cancel anytime</span>
           </div>
