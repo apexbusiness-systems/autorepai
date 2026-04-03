@@ -95,10 +95,13 @@ const Leads = () => {
                          <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Intent</div>
                          <div className="flex items-center gap-2">
                            <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                             <div
-                               className={`h-full ${lead.intent_score > 70 ? 'bg-green-500' : lead.intent_score > 40 ? 'bg-amber-500' : 'bg-red-500'}`}
-                               style={{ width: `${lead.intent_score}%` }}
-                             />
+                             <svg className="w-full h-full">
+                               <rect
+                                 className={`${lead.intent_score > 70 ? 'fill-green-500' : lead.intent_score > 40 ? 'fill-amber-500' : 'fill-red-500'}`}
+                                 width={`${lead.intent_score}%`}
+                                 height="100%"
+                               />
+                             </svg>
                            </div>
                            <span className="text-xs font-mono text-white">{lead.intent_score}</span>
                          </div>

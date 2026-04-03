@@ -100,8 +100,8 @@ const AIChatWidget = () => {
                 </div>
                 <div className="rounded-2xl rounded-tl-none bg-slate-800 px-4 py-3 text-slate-300 max-w-[85%] border border-slate-700 flex items-center gap-1">
                   <span className="animate-bounce">.</span>
-                  <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
-                  <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>.</span>
+                  <span className="animate-bounce [animation-delay:200ms]">.</span>
+                  <span className="animate-bounce [animation-delay:400ms]">.</span>
                 </div>
               </div>
             )}
