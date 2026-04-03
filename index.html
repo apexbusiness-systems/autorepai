@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AutoRepAi</title>
+    <title>__BRAND_NAME__</title>
+    <meta name="theme-color" content="__BRAND_COLOR__" />
+    <link rel="icon" href="__BRAND_FAVICON__" />
     <meta
       name="description"
       content="Compliance-first dealership AI platform for leads, inventory, quotes, and customer engagement."
@@ -12,5 +14,10 @@
   <body class="bg-slate-950 text-slate-100">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Quick inline script to set properties based on env if needed during dev
+      // Normally we could use a vite html plugin to replace these __BRAND_NAME__ etc.
+      // Doing this via Vite index.html transformer in vite.config.ts is better.
+    </script>
   </body>
 </html>
