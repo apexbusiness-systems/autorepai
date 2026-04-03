@@ -25,28 +25,41 @@ const AIChatWidget = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
+    const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
 
     const newUserMessage: Message = { role: 'user', content: inputValue.trim() };
-    setMessages(prev => [...prev, newUserMessage]);
+    const currentMessages = [...messages, newUserMessage];
+    setMessages(currentMessages);
     setInputValue('');
     setIsLoading(true);
 
     try {
-      // In a real implementation, this would call a Supabase Edge Function
-      // which securely holds the GROQ_API_KEY.
-      // We simulate the Groq response for the demo pitch.
-      setTimeout(() => {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: {
+          messages: currentMessages,
+          dealershipName: 'AutoRepAi Demo Dealership'
+        }
+      });
+
+      if (error) throw error;
+
+      if (data && data.content) {
         setMessages(prev => [...prev, {
           role: 'assistant',
-          content: `I've analyzed the request using Groq (llama3-70b-8192). The lead meets the preliminary AMVIC compliance checks. Would you like me to draft a follow-up email or calculate a preliminary quote?`
+          content: data.content
         }]);
-        setIsLoading(false);
-      }, 1000);
-
+      } else {
+        throw new Error('Invalid response format');
+      }
     } catch (error) {
       console.error('Chat error:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "I'm having trouble connecting right now. Please try again later."
+      }]);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -63,7 +76,7 @@ const AIChatWidget = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">AutoRep AI</p>
-                <p className="text-[10px] uppercase tracking-wider text-brand-400 font-bold">Powered by Groq Llama 3</p>
+                <p className="text-[10px] uppercase tracking-wider text-brand-400 font-bold">Powered by Gemini 2.5 Flash</p>
               </div>
             </div>
             <button
