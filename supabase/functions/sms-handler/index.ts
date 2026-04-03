@@ -6,13 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Simple in-memory or fallback DNC cache concept.
-// In reality, this would query a DNC integration or separate table.
-async function isPhoneOnDNCList(phone: string): Promise<boolean> {
-  // Stub for DNC verification logic (e.g., calling National DNC Registry API)
-  return false;
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
