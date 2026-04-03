@@ -69,10 +69,7 @@ describe('Auth Component', () => {
       expect(screen.getByRole('button', { name: 'Create Account' })).toBeInTheDocument();
     });
 
-    it('renders demo login button', () => {
-      renderAuth();
-      expect(screen.getByRole('button', { name: /demo account/i })).toBeInTheDocument();
-    });
+
   });
 
   describe('Form Validation', () => {

@@ -12,6 +12,7 @@ import CreditApps from './pages/CreditApps';
 import Inbox from './pages/Inbox';
 import Settings from './pages/Settings';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { ConsentBanner } from './components/ui/consent/ConsentBanner';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ConsentBanner />
     </ErrorBoundary>
   );
 };
