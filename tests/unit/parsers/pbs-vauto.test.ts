@@ -1,24 +1,24 @@
-import { describe, it, expect, mock } from 'bun:test';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { parsePBS, parseVAuto } from '../../../src/lib/parsers/pbs-vauto';
 
 describe('PBS Parser', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('successfully parses data and logs activity', () => {
-    const consoleSpy = mock(() => {});
-    const originalLog = console.log;
-    console.log = consoleSpy;
+    const testData = { key: 'value', dealerId: '123' };
+    const result = parsePBS(testData);
 
-    try {
-      const testData = { key: 'value', dealerId: '123' };
-      const result = parsePBS(testData);
-
-      expect(result).toEqual({
-        success: true,
-        data: testData,
-      });
-      expect(consoleSpy).toHaveBeenCalledWith('Parsing PBS data');
-    } finally {
-      console.log = originalLog;
-    }
+    expect(result).toEqual({
+      success: true,
+      data: testData,
+    });
+    expect(console.log).toHaveBeenCalledWith('Parsing PBS data');
   });
 
   it('handles empty input data', () => {
@@ -27,26 +27,27 @@ describe('PBS Parser', () => {
       success: true,
       data: null,
     });
+    expect(console.log).toHaveBeenCalledWith('Parsing PBS data');
   });
 });
 
 describe('vAuto Parser', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('successfully parses data and logs activity', () => {
-    const consoleSpy = mock(() => {});
-    const originalLog = console.log;
-    console.log = consoleSpy;
+    const testData = { inventory: [] };
+    const result = parseVAuto(testData);
 
-    try {
-      const testData = { inventory: [] };
-      const result = parseVAuto(testData);
-
-      expect(result).toEqual({
-        success: true,
-        data: testData,
-      });
-      expect(consoleSpy).toHaveBeenCalledWith('Parsing vAuto data');
-    } finally {
-      console.log = originalLog;
-    }
+    expect(result).toEqual({
+      success: true,
+      data: testData,
+    });
+    expect(console.log).toHaveBeenCalledWith('Parsing vAuto data');
   });
 });
