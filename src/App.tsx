@@ -11,6 +11,7 @@ import QuoteBuilder from './pages/QuoteBuilder';
 import CreditApps from './pages/CreditApps';
 import Inbox from './pages/Inbox';
 import Settings from './pages/Settings';
+import Preferences from './pages/Preferences';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ConsentBanner } from './components/ui/consent/ConsentBanner';
 
@@ -20,6 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/preferences" element={<Preferences />} />
         <Route
           path="/app"
           element={
