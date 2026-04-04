@@ -42,7 +42,8 @@ jobs:
       run: npm run build
     # Add actual Lighthouse action or custom script to assert 98+ score
     - name: Run Lighthouse (Mock assertion > 98)
-      run: echo "Lighthouse PWA Score: 100/100"
+      run: |
+        echo "Lighthouse PWA Score: 100/100"
 
   deploy:
     name: Blue-Green Cloudflare Deploy
