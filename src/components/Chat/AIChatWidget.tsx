@@ -76,7 +76,7 @@ const AIChatWidget = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">AutoRep AI</p>
-                <p className="text-[10px] uppercase tracking-wider text-brand-400 font-bold">Powered by Gemini 2.5 Flash</p>
+                <p className="text-[10px] uppercase tracking-wider text-brand-400 font-bold">Powered by Groq</p>
               </div>
             </div>
             <button
@@ -152,7 +152,7 @@ const AIChatWidget = () => {
           className="rounded-full h-16 w-16 sm:h-20 sm:w-20 p-0 bg-brand-500 hover:bg-brand-400 text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group border-2 border-brand-300"
         >
           <Bot className="h-8 w-8 sm:h-10 sm:w-10 text-black group-hover:animate-bounce" strokeWidth={1.5} />
-          <span className="sr-only">Open AI Chat</span>
+          <span className="sr-only">Open AI Chat Widget</span>
           <div className="absolute top-0 right-0 h-4 w-4 bg-green-500 rounded-full border-2 border-black"></div>
         </Button>
       )}

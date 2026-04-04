@@ -30,7 +30,7 @@ export default function Preferences() {
       try {
         const { data, error: fetchError } = await supabase.functions.invoke('preferences-manager', {
           method: 'GET',
-          query: { lead: leadId }
+          body: { lead: leadId }
         });
 
         if (fetchError) throw fetchError;
