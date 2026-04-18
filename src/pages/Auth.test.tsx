@@ -309,7 +309,8 @@ describe('Auth Component', () => {
         expect(screen.getByText(/network error/i)).toBeInTheDocument();
       });
 
-      expect(consoleSpy).toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
+      expect(consoleSpy).toHaveBeenCalledWith('auth_failed');
+      expect(consoleSpy).not.toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
 
       consoleSpy.mockRestore();
     });
