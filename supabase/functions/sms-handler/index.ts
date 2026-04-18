@@ -1,5 +1,5 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.0";
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.48.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -41,7 +41,7 @@ serve(async (req) => {
         const leadId = leads[0].id;
 
         // 2-5. Execute independent updates concurrently
-        const [_, dncResult] = await Promise.all([
+        const results = await Promise.all([
           // 2. Update consent status to withdrawn for SMS channel
           supabase
             .from('consents')
@@ -74,6 +74,7 @@ serve(async (req) => {
             .eq('id', leadId)
         ]);
 
+        const dncResult = results[1];
         const dncError = dncResult.error;
         if (dncError && dncError.code !== '42P01') {
             // Ignore 42P01 if the table doesn't exist yet, but log others
