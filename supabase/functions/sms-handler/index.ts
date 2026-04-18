@@ -40,7 +40,7 @@ serve(async (req) => {
       if (leads && leads.length > 0) {
         const leadId = leads[0].id;
 
-        // 2-5. Execute independent updates concurrently
+        // 2-5. Execute independent database updates concurrently
         const results = await Promise.all([
           // 2. Update consent status to withdrawn for SMS channel
           supabase
@@ -74,8 +74,7 @@ serve(async (req) => {
             .eq('id', leadId)
         ]);
 
-        const dncResult = results[1];
-        const dncError = dncResult.error;
+        const dncError = results[1].error;
         if (dncError && dncError.code !== '42P01') {
             // Ignore 42P01 if the table doesn't exist yet, but log others
             console.error('DNC List Insert Error:', dncError);
