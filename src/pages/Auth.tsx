@@ -82,7 +82,7 @@ const Auth = () => {
       }
       setError(errorMessage);
       // Log security event (simulated)
-      console.error('auth_failed', { email: data.email });
+      console.error('auth_failed');
     } finally {
       setIsLoading(false);
     }
