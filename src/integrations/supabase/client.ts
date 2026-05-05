@@ -4,6 +4,9 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
+  // In test mode, we want to avoid throwing so that the test runner can initialize.
+  // We also check for CI or DEV environments if we want to be more lenient,
+  // but for a strict security fix, we should only be lenient in 'test' mode.
   if (import.meta.env.MODE === 'test') {
     console.warn('Supabase environment variables are missing. Using placeholder client for testing.');
   } else {
