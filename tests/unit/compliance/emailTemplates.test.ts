@@ -27,7 +27,7 @@ describe('getCompliantEmailFooter', () => {
   });
 
   it('omits license text when dealerLicense is not provided', () => {
-    const { dealerLicense, ...dealershipWithoutLicense } = mockDealership;
+    const { dealerLicense: _, ...dealershipWithoutLicense } = mockDealership;
     const footer = getCompliantEmailFooter(dealershipWithoutLicense, leadId, consentId, consentDateStr);
 
     expect(footer).not.toContain('Dealer License:');
