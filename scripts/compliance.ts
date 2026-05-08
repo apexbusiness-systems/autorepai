@@ -1,6 +1,4 @@
 // Weekly compliance script
-// eslint-disable-next-line no-unused-vars
-import { createClient } from '@supabase/supabase-js';
 
 const checkCompliance = async () => {
   console.log('Running weekly GDPR & Data Compliance scan...');
