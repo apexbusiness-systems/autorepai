@@ -1,1 +1,7 @@
 project_id = "cmssegecthfqqrhiqdod"
+
+[db]
+port = 5432
+
+[api]
+port = 54321
