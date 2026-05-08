@@ -60,6 +60,7 @@ serve(async (req: Request) => {
 
     return new Response(JSON.stringify({ success: true, message: 'Credit application webhook processed securely' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    console.error('Credit webhook error:', err);
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   }
 });

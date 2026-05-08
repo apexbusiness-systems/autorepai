@@ -50,6 +50,7 @@ serve(async (req: Request) => {
 
     return new Response(JSON.stringify({ success: true, message: 'Inventory sync initiated successfully' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    console.error('Inventory sync error:', err);
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   }
 });
