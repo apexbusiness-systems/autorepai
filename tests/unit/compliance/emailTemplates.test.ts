@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getCompliantEmailFooter, DealershipInfo } from '../../../src/lib/compliance/emailTemplates';
+import { getCompliantEmailFooter, type DealershipInfo } from '@/lib/compliance/emailTemplates';
 
 describe('getCompliantEmailFooter', () => {
   const mockDealership: DealershipInfo = {

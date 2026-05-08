@@ -44,18 +44,12 @@ jobs:
       run: npm run test -- --coverage --passWithNoTests
 
     - name: Run build
-      env:
-        VITE_SUPABASE_URL: https://placeholder.supabase.co
-        VITE_SUPABASE_ANON_KEY: public-anon-key
       run: npm run build
 
     - name: Install Playwright browsers
       run: npx playwright install --with-deps
 
     - name: Run e2e tests
-      env:
-        VITE_SUPABASE_URL: https://placeholder.supabase.co
-        VITE_SUPABASE_ANON_KEY: public-anon-key
       run: npm run test:e2e
 
   lint:

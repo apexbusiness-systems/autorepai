@@ -37,6 +37,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
           if (profile?.dealership_id) {
              setHasTenant(true);
           } else {
+             // Mock fallback logic removed to strictly enforce tenancy
              console.error("User missing dealership_id / tenant assignment.");
           }
         }
