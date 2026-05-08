@@ -1,5 +1,5 @@
-export const getBranding = () => {
-  const mode = import.meta.env.VITE_BRANDING_MODE || 'autorepai';
+export const getBranding = (modeOverride?: string) => {
+  const mode = modeOverride || import.meta.env.VITE_BRANDING_MODE || 'autorepai';
 
   if (mode === 'doorstep') {
     return {
