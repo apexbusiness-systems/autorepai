@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cn } from '../../src/lib/utils';
+import { cn } from '@/lib/utils';
 
 describe('cn utility', () => {
   it('merges class names correctly', () => {
@@ -31,5 +31,27 @@ describe('cn utility', () => {
 
   it('handles empty inputs', () => {
     expect(cn()).toBe('');
+  });
+
+  it('handles numeric 0', () => {
+    expect(cn('foo', 0)).toBe('foo');
+  });
+
+  it('handles empty strings', () => {
+    expect(cn('foo', '')).toBe('foo');
+  });
+
+  it('handles deeply nested arrays', () => {
+    expect(cn(['foo', ['bar', ['baz']]])).toBe('foo bar baz');
+  });
+
+  it('deduplicates tailwind classes', () => {
+    expect(cn('p-4', 'p-4', 'm-2')).toBe('p-4 m-2');
+  });
+
+  it('handles complex tailwind conflicts', () => {
+    expect(cn('px-2', 'p-4')).toBe('p-4');
+    expect(cn('m-2', 'mt-4')).toBe('m-2 mt-4');
+    expect(cn('mt-4', 'm-2')).toBe('m-2');
   });
 });
