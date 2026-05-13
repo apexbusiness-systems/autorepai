@@ -103,6 +103,22 @@ describe('calculateQuoteTotals', () => {
     expect(result.totalDue).toBe(0);
   });
 
+  it('handles down payment exceeding total cost', () => {
+    const input = {
+      vehiclePrice: 10000,
+      tradeInValue: 0,
+      downPayment: 15000,
+      fees: 0,
+      province: 'ON'
+    };
+
+    const result = calculateQuoteTotals(input);
+
+    // taxableAmount = 10000, taxTotal = 1300, totalCost = 11300
+    // totalDue should be 0, not -3700
+    expect(result.totalDue).toBe(0);
+  });
+
   it('handles zero fees', () => {
     const input = {
       vehiclePrice: 10000,

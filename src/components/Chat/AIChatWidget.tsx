@@ -1,22 +1,82 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '../ui/button';
-import { Bot, X } from 'lucide-react';
+import { Input } from '../ui/Input';
+import { Bot, X, Send } from 'lucide-react';
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
 const AIChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: 'How can I help you qualify this lead today?' }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+    const handleSend = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const newUserMessage: Message = { role: 'user', content: inputValue.trim() };
+    const currentMessages = [...messages, newUserMessage];
+    setMessages(currentMessages);
+    setInputValue('');
+    setIsLoading(true);
+
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: {
+          messages: currentMessages,
+          dealershipName: 'AutoRepAi Demo Dealership'
+        }
+      });
+
+      if (error) throw error;
+
+      if (data && data.content) {
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: data.content
+        }]);
+      } else {
+        throw new Error('Invalid response format');
+      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "I'm having trouble connecting right now. Please try again later."
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {isOpen ? (
-        <div className="w-80 rounded-2xl border border-slate-800 bg-slate-900 shadow-xl animate-fade-in-up origin-bottom-right">
-          <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3 bg-brand-500/5">
+        <div className="w-80 sm:w-96 rounded-2xl border border-slate-800 bg-black shadow-2xl shadow-brand-500/10 animate-fade-in-up origin-bottom-right flex flex-col h-[500px] max-h-[80vh]">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3 bg-gradient-to-r from-slate-900 to-slate-950 rounded-t-2xl">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-brand-500 flex items-center justify-center">
-                 <Bot className="h-5 w-5 text-white" />
+              <div className="h-8 w-8 rounded-full bg-brand-500 flex items-center justify-center shadow-sm shadow-brand-500/50">
+                 <Bot className="h-5 w-5 text-black" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">AI Assistant</p>
-                <p className="text-[10px] uppercase tracking-wider text-slate-400">Gemini 2.5 Flash</p>
+                <p className="text-sm font-semibold text-white">AutoRep AI</p>
+                <p className="text-[10px] uppercase tracking-wider text-brand-400 font-bold">Powered by Groq</p>
               </div>
             </div>
             <button
@@ -27,33 +87,73 @@ const AIChatWidget = () => {
               <X className="h-4 w-4" />
             </button>
           </div>
-          <div className="space-y-3 px-4 py-4 text-sm text-slate-200 min-h-[200px] flex flex-col justify-end">
-            <div className="flex gap-2">
-               <div className="h-6 w-6 rounded-full bg-brand-500 flex-shrink-0 flex items-center justify-center mt-1">
-                  <Bot className="h-3 w-3 text-white" />
-               </div>
-               <p className="rounded-2xl rounded-tl-none bg-slate-800 px-4 py-3 text-slate-300 max-w-[85%]">
-                 How can I help you qualify this lead today?
-               </p>
-            </div>
-            <div className="text-[10px] text-center text-slate-500 mt-2">
-              Chat history will sync via /functions/v1/ai-chat
-            </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-slate-950/50">
+            {messages.map((msg, index) => (
+              <div key={index} className={`flex gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                {msg.role === 'assistant' && (
+                  <div className="h-6 w-6 rounded-full bg-brand-500 flex-shrink-0 flex items-center justify-center mt-1">
+                    <Bot className="h-3 w-3 text-black" />
+                  </div>
+                )}
+                <div className={`rounded-2xl px-4 py-3 text-sm max-w-[85%] ${
+                  msg.role === 'user'
+                    ? 'bg-brand-500/20 border border-brand-500/30 text-white rounded-tr-none'
+                    : 'bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700'
+                }`}>
+                  {msg.content}
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex gap-2">
+                <div className="h-6 w-6 rounded-full bg-brand-500 flex-shrink-0 flex items-center justify-center mt-1">
+                  <Bot className="h-3 w-3 text-black" />
+                </div>
+                <div className="rounded-2xl rounded-tl-none bg-slate-800 px-4 py-3 text-slate-300 max-w-[85%] border border-slate-700 flex items-center gap-1">
+                  <span className="animate-bounce">.</span>
+                  <span className="animate-bounce [animation-delay:200ms]">.</span>
+                  <span className="animate-bounce [animation-delay:400ms]">.</span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
-          <div className="border-t border-slate-800 px-4 py-3 bg-slate-950/50">
-            <Button className="w-full bg-brand-500 hover:bg-brand-600 text-white font-medium" size="sm">
-              Start a new conversation
-            </Button>
+
+          {/* Input Area */}
+          <div className="border-t border-slate-800 px-4 py-3 bg-slate-900 rounded-b-2xl">
+            <form
+              onSubmit={(e) => { e.preventDefault(); handleSend(); }}
+              className="flex items-center gap-2"
+            >
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask about inventory, compliance..."
+                className="bg-black border-slate-700 focus-visible:ring-brand-500 text-sm h-10"
+              />
+              <Button
+                type="submit"
+                disabled={!inputValue.trim() || isLoading}
+                className="bg-brand-500 hover:bg-brand-600 text-black h-10 w-10 flex-shrink-0"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </form>
+            <div className="text-[9px] text-center text-slate-500 mt-2">
+              Enterprise encryption active. Conversations mapped to CRM.
+            </div>
           </div>
         </div>
       ) : (
         <Button
           onClick={() => setIsOpen(true)}
-          className="rounded-full h-24 w-24 p-0 bg-brand-500 hover:bg-brand-600 text-white shadow-[0_0_40px_-10px_rgba(239,68,68,0.5)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group"
+          className="rounded-full h-16 w-16 sm:h-20 sm:w-20 p-0 bg-brand-500 hover:bg-brand-400 text-black shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group border-2 border-brand-300"
         >
-          <Bot className="h-12 w-12 text-white group-hover:animate-bounce" strokeWidth={1.5} />
-          <span className="sr-only">Open AI Chat</span>
-          <div className="absolute top-0 right-0 h-6 w-6 bg-green-500 rounded-full border-4 border-slate-950"></div>
+          <Bot className="h-8 w-8 sm:h-10 sm:w-10 text-black group-hover:animate-bounce" strokeWidth={1.5} />
+          <span className="sr-only">Open AI Chat Widget</span>
+          <div className="absolute top-0 right-0 h-4 w-4 bg-green-500 rounded-full border-2 border-black"></div>
         </Button>
       )}
     </div>

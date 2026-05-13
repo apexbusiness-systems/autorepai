@@ -34,7 +34,7 @@ export const createMockAuthError = (message: string, status = 400): AuthError =>
   name: 'AuthError',
   message,
   status,
-});
+} as unknown as AuthError);
 
 /**
  * Mock Supabase client with default successful responses
