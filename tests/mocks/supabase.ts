@@ -29,12 +29,15 @@ export const createMockSession = (overrides?: Partial<Session>): Session => ({
 
 /**
  * Mock auth error factory
+ * Returns an Error instance that also satisfies the Supabase AuthError interface
  */
-export const createMockAuthError = (message: string, status = 400): AuthError => ({
-  name: 'AuthError',
-  message,
-  status,
-} as unknown as AuthError);
+export const createMockAuthError = (message: string, status = 400): AuthError => {
+  const error = new Error(message);
+  return Object.assign(error, {
+    name: 'AuthError',
+    status,
+  }) as AuthError;
+};
 
 /**
  * Mock Supabase client with default successful responses

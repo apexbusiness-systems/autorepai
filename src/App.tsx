@@ -11,38 +11,31 @@ import QuoteBuilder from './pages/QuoteBuilder';
 import CreditApps from './pages/CreditApps';
 import Inbox from './pages/Inbox';
 import Settings from './pages/Settings';
-import Preferences from './pages/Preferences';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { ConsentBanner } from './components/ui/consent/ConsentBanner';
 
 const App = () => {
   return (
-    <ErrorBoundary>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/preferences" element={<Preferences />} />
-        <Route
-          path="/app"
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="leads" element={<Leads />} />
-          <Route path="inventory" element={<Inventory />} />
-          <Route path="quotes" element={<Quotes />} />
-          <Route path="quotes/new" element={<QuoteBuilder />} />
-          <Route path="credit-apps" element={<CreditApps />} />
-          <Route path="inbox" element={<Inbox />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <ConsentBanner />
-    </ErrorBoundary>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route
+        path="/app"
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="leads" element={<Leads />} />
+        <Route path="inventory" element={<Inventory />} />
+        <Route path="quotes" element={<Quotes />} />
+        <Route path="quotes/new" element={<QuoteBuilder />} />
+        <Route path="credit-apps" element={<CreditApps />} />
+        <Route path="inbox" element={<Inbox />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
 
