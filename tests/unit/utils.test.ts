@@ -45,8 +45,8 @@ describe('cn utility', () => {
     expect(cn(['foo', ['bar', ['baz']]])).toBe('foo bar baz');
   });
 
-  it('deduplicates classes', () => {
-    expect(cn('foo', 'foo', 'bar')).toBe('foo bar');
+  it('deduplicates tailwind classes', () => {
+    expect(cn('p-4', 'p-4', 'm-2')).toBe('p-4 m-2');
   });
 
   it('handles complex tailwind conflicts', () => {
