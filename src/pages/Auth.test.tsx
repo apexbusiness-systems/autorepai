@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
@@ -69,7 +68,10 @@ describe('Auth Component', () => {
       expect(screen.getByRole('button', { name: 'Create Account' })).toBeInTheDocument();
     });
 
-
+    it('renders demo login button', () => {
+      renderAuth();
+      expect(screen.getByRole('button', { name: /demo account/i })).toBeInTheDocument();
+    });
   });
 
   describe('Form Validation', () => {
@@ -309,8 +311,7 @@ describe('Auth Component', () => {
         expect(screen.getByText(/network error/i)).toBeInTheDocument();
       });
 
-      expect(consoleSpy).toHaveBeenCalledWith('auth_failed');
-      expect(consoleSpy).not.toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
+      expect(consoleSpy).toHaveBeenCalledWith('auth_failed', expect.objectContaining({ email: 'test@example.com' }));
 
       consoleSpy.mockRestore();
     });

@@ -19,7 +19,7 @@ export const calculateQuoteTotals = (input: QuoteInput) => {
   const taxRate = PROVINCE_TAX_RATES[input.province] ?? 0.13;
   const taxableAmount = Math.max(input.vehiclePrice - input.tradeInValue, 0) + input.fees;
   const taxTotal = taxableAmount * taxRate;
-  const totalDue = Math.max(taxableAmount + taxTotal - input.downPayment, 0);
+  const totalDue = taxableAmount + taxTotal - input.downPayment;
 
   return {
     taxRate,

@@ -73,16 +73,10 @@ const Auth = () => {
         throw error;
       }
       navigate(redirectTo, { replace: true });
-    } catch (err: unknown) {
-      let errorMessage = 'Failed to sign in';
-      if (err instanceof Error) {
-        errorMessage = err.message;
-      } else if (typeof err === 'object' && err !== null && 'message' in err) {
-        errorMessage = String((err as { message: unknown }).message);
-      }
-      setError(errorMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in');
       // Log security event (simulated)
-      console.error('auth_failed');
+      console.error('auth_failed', { email: data.email });
     } finally {
       setIsLoading(false);
     }
@@ -109,20 +103,30 @@ const Auth = () => {
       }
 
       setSuccessMessage('Account created! Please check your email to confirm your account.');
-    } catch (err: unknown) {
-      let errorMessage = 'Failed to sign up';
-      if (err instanceof Error) {
-        errorMessage = err.message;
-      } else if (typeof err === 'object' && err !== null && 'message' in err) {
-        errorMessage = String((err as { message: unknown }).message);
-      }
-      setError(errorMessage);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign up');
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleDemoLogin = async () => {
+    const email = import.meta.env.VITE_DEMO_EMAIL;
+    const password = import.meta.env.VITE_DEMO_PASSWORD;
 
+    if (!email || !password) {
+      console.error('Demo credentials are not configured');
+      return;
+    }
+
+    setIsLoading(true);
+    await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    navigate(redirectTo, { replace: true });
+    setIsLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
@@ -265,7 +269,18 @@ const Auth = () => {
             </form>
           )}
 
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-slate-800" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-slate-900 px-2 text-slate-400">Or continue with</span>
+            </div>
+          </div>
 
+          <Button variant="outline" onClick={handleDemoLogin} className="w-full" disabled={isLoading}>
+            Demo Account
+          </Button>
         </div>
       </div>
     </div>
