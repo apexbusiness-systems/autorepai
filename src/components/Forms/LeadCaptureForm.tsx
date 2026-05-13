@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
 import { Input } from '../ui/Input';
+import { supabase } from '@/integrations/supabase/client';
 
 const leadSchema = z.object({
   fullName: z.string().min(2, 'Full name is required'),
@@ -23,8 +24,22 @@ const LeadCaptureForm = () => {
     resolver: zodResolver(leadSchema)
   });
 
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
+  const onSubmit = async (data: LeadFormValues) => {
+    // Remove artificial 400ms delay for performance optimization
+    const { error } = await supabase.from('leads').insert({
+      full_name: data.fullName,
+      status: 'new'
+    });
+
+    // TODO: The 'leads' table schema currently only supports 'id', 'full_name', and 'status'.
+    // Once the schema is updated to include 'email' and 'marketing_consent', they should be persisted here:
+    // email: data.email,
+    // marketing_consent: data.consentMarketing
+
+    if (error) {
+      console.error('Error saving lead:', error);
+      // Optional: Handle error UI state if needed
+    }
   };
 
   return (
