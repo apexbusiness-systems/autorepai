@@ -3,6 +3,15 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/Input';
 import { calculateQuoteTotals, type QuoteInput } from '../../lib/taxCalculator';
 
+const QUOTE_FIELDS = [
+  { label: 'Vehicle price', key: 'vehiclePrice' },
+  { label: 'Trade-in value', key: 'tradeInValue' },
+  { label: 'Down payment', key: 'downPayment' },
+  { label: 'Fees', key: 'fees' }
+] as const;
+
+const PROVINCES = ['ON', 'BC', 'AB', 'SK', 'MB', 'QC'] as const;
+
 const defaultInput: QuoteInput = {
   vehiclePrice: 45000,
   tradeInValue: 5000,
@@ -26,12 +35,7 @@ const QuoteCalculator = () => {
         <Button size="sm">Generate PDF</Button>
       </div>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        {([
-          { label: 'Vehicle price', key: 'vehiclePrice' },
-          { label: 'Trade-in value', key: 'tradeInValue' },
-          { label: 'Down payment', key: 'downPayment' },
-          { label: 'Fees', key: 'fees' }
-        ] as const).map((field) => (
+        {QUOTE_FIELDS.map((field) => (
           <label key={field.key} className="text-sm">
             {field.label}
             <Input
@@ -54,7 +58,7 @@ const QuoteCalculator = () => {
             value={input.province}
             onChange={(event) => setInput((prev) => ({ ...prev, province: event.target.value }))}
           >
-            {['ON', 'BC', 'AB', 'SK', 'MB', 'QC'].map((province) => (
+            {PROVINCES.map((province) => (
               <option key={province} value={province}>
                 {province}
               </option>
