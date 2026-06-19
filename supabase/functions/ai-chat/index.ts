@@ -79,7 +79,7 @@ Always ensure interactions respect AMVIC/OMVIC/CASL regulations (e.g., all-in pr
     });
   } catch (error) {
     console.error('Error in ai-chat function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: error.message === 'Unauthorized' || error.message === 'Missing Authorization header' ? 401 : 500,
     });
